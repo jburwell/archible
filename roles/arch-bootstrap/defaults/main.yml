@@ -41,5 +41,5 @@ lvm:
   volumes:
     - name: root
       size: 100%FREE
-      fstype: ext4
+      fstype: xfs
       mountpoint: /

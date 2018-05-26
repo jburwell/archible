@@ -8,17 +8,20 @@
   command: dmsetup remove_all
 
 - name: create partition table on disks
-  partition: dev={{ disk.device }} table={{ disk.table }} force=yes
+  partition: 
+    dev: "{{ disk.device }}"
+    table: "{{ disk.table }}"
+    force: true
 
 - name: create disk partitions
-  partition: >
-    dev="{{ disk.device }}"
-    name="{{ item.name }}"
-    start="{{ item.start }}"
-    end="{{ item.end }}"
-    type="{{ item.type }}"
-    flags="{{ item.flags|default(omit) }}"
-    fstype="{{ item.fstype|default(omit) }}"
+  partition:
+    dev: "{{ disk.device }}"
+    name: "{{ item.name }}"
+    start: "{{ item.start }}"
+    end: "{{ item.end }}"
+    type: "{{ item.type }}"
+    flags: "{{ item.flags|default(omit) }}"
+    fstype: "{{ item.fstype|default(omit) }}"
   with_items:
     - "{{ disk.partitions }}"
 
@@ -42,11 +45,17 @@
   when: item.lvm_group is defined
 
 - name: create LVM logical volumes
-  lvol: vg={{ lvm.group }} lv={{ item.name }} size={{ item.size }}
+  lvol: 
+    vg: "{{ lvm.group }}"
+    lv: "{{ item.name }}"
+    size: "{{ item.size }}"
   with_items: "{{ lvm.volumes }}"
 
 - name: create filesystems on LVM volumes
-  partition: dev=/dev/{{ lvm.group }}/{{ item.name }} fstype={{ item.fstype }} force=true
+  partition: 
+    dev: "/dev/{{ lvm.group }}/{{ item.name }}" 
+    fstype: "{{ item.fstype }}" 
+    force: true
   with_items: "{{ lvm.volumes }}"
 
 - name: create swap
