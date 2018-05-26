@@ -8,25 +8,25 @@
 
 - name: mount LVM volumes
   mount:
-    name:"{{ arch_root }}{{ item.mountpoint }}"
+    name: "{{ arch_root }}{{ item.mountpoint }}"
     src: "/dev/{{ lvm.group }}/{{ item.name }}"
-    fstype: '{{ item.fstype }}'
+    fstype: "{{ item.fstype }}"
     state: mounted
   with_items: "{{ lvm.volumes }}"
   when: item.mountpoint is defined
 
 - name: mount raw volumes
   mount:
-    name: '{{ arch_root }}{{ item.mountpoint }}'
-    src: 'PARTLABEL={{ item.name }}'
-    fstype: '{{ item.fstype }}'
+    name: "{{ arch_root }}{{ item.mountpoint }}"
+    src: "PARTLABEL={{ item.name }}"
+    fstype: "{{ item.fstype }}"
     state: mounted
   with_items: "{{ disk.partitions }}"
   when: item.mountpoint is defined
 
 - name: create /etc directory
   file:
-    path: {{ arch_root }}/etc
+    path: "{{ arch_root }}/etc"
     mode: 0755
     owner: root
     group: root
