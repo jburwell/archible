@@ -35,6 +35,7 @@
   * If submoduls remain necessary, convert to git-subtree
   * Choose display manager -> https://wiki.archlinux.org/index.php/Display_manager
   * Define LVM volumes for /, /usr, /var, /home, and /tmp
+  * Remove the localhost definition as the default interpriter should work ...
 
 mise
 ====
