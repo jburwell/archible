@@ -8,6 +8,7 @@
     * xorg
     * web
   * Add roles
+    * gpg
     * network-manager
     * ntpd
     * yaourt
@@ -33,6 +34,7 @@
   * Parameterize package list for the pacstrap command in arch-bootstrap
   * If submoduls remain necessary, convert to git-subtree
   * Choose display manager -> https://wiki.archlinux.org/index.php/Display_manager
+  * Define LVM volumes for /, /usr, /var, /home, and /tmp
 
 mise
 ====

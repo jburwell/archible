@@ -19,12 +19,12 @@ disk:
   table: gpt
   partitions:
 
-    - name: efi
+    - name: boot
       start: 1MiB
       end: 512MiB
       type: EPS
-      fstype: vfat
-      mountpoint: /boot/efi
+      fstype: xfs
+      mountpoint: /boot
 
     - name: lvm
       start: 512MiB
