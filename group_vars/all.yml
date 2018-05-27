@@ -11,15 +11,14 @@ machine_aliases:
 country: United States
 locales:
   - en_US
-  - uk_UA
 
 user:
-  name: zoresvit
-  comment: Ruslan Kiianchuk
-  group: zoresvit
+  name: jburwell
+  comment: John Burwell
+  group: jburwell
   groups:
     - sys
     - video
     - wheel
-  shell: /bin/bash
-  email: ruslan.kiianchuk@gmail.com
+  shell: /bin/zsh
+  email: meaux@cockamamy.net
