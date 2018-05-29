@@ -37,8 +37,8 @@
 
 - name: mount /tmp onto tmpfs
   lineinfile: 
-    dest: "{{ arch_root }}/etc/fstab" 
+    dest: "{{ arch_root }}/etc/fstab"
     line: "tmpfs /tmp tmpfs defaults,noatime,mode=1777 0 0"
 
-- name: Bootstrap base Arch Linux.
-  command: pacstrap {{ arch_root }} base base-devel sudo lvm2 reflector ansible python2 net-tools git grub
+- name: bootstrap Arch Linux base packages
+  command: "pacstrap {{ arch_root }} base base-devel sudo lvm2 reflector ansible python2 net-tools git grub"
