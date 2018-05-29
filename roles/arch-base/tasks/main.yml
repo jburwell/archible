@@ -11,19 +11,31 @@
   when: "'GenuineIntel' in ansible_processor"
 
 - name: install linux firmware
-  pacman: name=linux-firmware state=present
+  pacman:
+    name: linux-firmware 
+    state: present
 
 - name: Enable systemd-timesyncd
   command: timedatectl set-ntp true
 
 - name: install cronie
-  pacman: name=cronie state=present
+  pacman:
+    name: cronie 
+    state: present
 
 - name: enable cronie
-  service: name=cronie.service enabled=yes state=started
+  service: 
+    name: cronie.service
+    enabled: true
+    state: started
 
 - name: install udev rule for IO scheduler
-  copy: src=udev/scheduler.rules dest=/etc/udev/rules.d/20-scheduler.rules
+  copy:
+    src: udev/scheduler.rules
+    dest: /etc/udev/rules.d/20-scheduler.rules
+    mode: 0644
+    owner: root
+    group: root
 
 - include: user.yml
 - include: shell.yml

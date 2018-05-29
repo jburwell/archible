@@ -12,7 +12,7 @@
 
   roles:
     - pacman
-      #    - base
+    - arch-base
     - xorg
     - ssh
     - network
