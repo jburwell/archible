@@ -1,5 +1,5 @@
 ---
 
 - name: netctl
-  src: git=https://github.com/jburwell/ansible-netctl
+  src: https://github.com/jburwell/ansible-netctl/archive/master.tar.gz
 
