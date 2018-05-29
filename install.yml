@@ -59,7 +59,7 @@
 
   roles:
     - arch-chroot
-
+    - netctl
 
 - hosts: localhost
   connection: local

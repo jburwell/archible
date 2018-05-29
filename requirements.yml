@@ -1,0 +1,5 @@
+---
+
+- name: netctl
+  src: git=https://github.com/jburwell/ansible-netctl
+

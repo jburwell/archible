@@ -80,3 +80,5 @@ lvm:
       size: 100%FREE
       fstype: xfs
       mountpoint: /home
+
+netctl_wired_interface: enp0s3

@@ -5,23 +5,35 @@
   register: firmware
 
 - name: create /boot/efi directory
-  file: path=/boot/efi state=directory
+  file:
+    path: /boot/efi
+    state: directory
   when: firmware.stdout == 'UEFI'
 
 - name: find out EFI partition number
   shell: "file /dev/disk/by-partlabel/efi | grep -o '.$'"
   register: efi_partition_number
-  when: firmware.stdout == 'UEFI'
+  when: firmware.stdout == "UEFI"
 
 - name: detect UUID of encrypted device
   command: blkid -s PARTUUID -o value /dev/disk/by-partlabel/{{ encrypt_partition }}
   register: cryptdevice_uuid
 
-- name: install bootloader packages
-  pacman: name={{ item }} state=present update_cache=yes
+- name: install grub
+  pacman:
+    name: grub
+    state: present
+    update_cache: true
   with_items:
     - grub
     - efibootmgr
+
+- name: install EFI boot manager
+  pacman:
+    name: efibootmgr
+    state: present
+    update_cache: true
+  when: firmware.stdout == "UEFI"
 
 - name: configure encrypted device for GRUB
   lineinfile: 
@@ -41,23 +53,23 @@
 
 - name: install Grub bootloader for UEFI
   command: grub-install --recheck
-  when: firmware.stdout == 'UEFI'
+  when: firmware.stdout == "UEFI"
 
 - name: install Grub bootloader for BIOS
   command: grub-install --recheck {{ disk.device }}
-  when: firmware.stdout == 'BIOS'
+  when: firmware.stdout == "BIOS"
 
 - name: create Grub config
   command: grub-mkconfig -o /boot/grub/grub.cfg
 
 - name: create UEFI boot entry
   command: efibootmgr --create --disk {{ disk.device }} --part {{ efi_partition_number.stdout }} --loader /EFI/arch/grubx64.efi --label "Arch Linux"
-  when: firmware.stdout == 'UEFI'
+  when: firmware.stdout == "UEFI"
   ignore_errors: yes
 
 - name: write EFI entry for VirtualBox
   lineinfile:
     dest: /boot/efi/startup.nsh
     line: "EFI\\arch\\grubx64.efi"
-    create: yes
-  when: ansible_product_name == "VirtualBox"
+    create: true
+  when: ansible_product_name == "VirtualBox" and firmware.stdout == "UEFI"

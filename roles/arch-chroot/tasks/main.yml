@@ -4,21 +4,38 @@
   command: reflector --sort score -p https --country '{{ country }}' --save /etc/pacman.d/mirrorlist
 
 - name: upgrade system to latest state
-  pacman: update_cache=yes upgrade=yes
+  pacman:
+    update_cache: true
+    upgrade: true
 
 - include: locales.yml
 
 - name: set console font
-  lineinfile: dest=/etc/vconsole.conf state=present create=yes line="FONT=Lat2-Terminus16"
+  lineinfile:
+    dest: /etc/vconsole.conf
+    state: present
+    create: true
+    # TODO Parameterize font ...
+    line: "FONT=Lat2-Terminus16"
 
 - name: configure hostname
-  lineinfile: dest=/etc/hostname create=yes line='{{ hostname }}'
+  lineinfile:
+    dest: /etc/hostname
+    create: true
+    line: "{{ hostname }}"
 
 - name: set hostname in /etc/hosts file
-  template: src=hosts.j2 dest=/etc/hosts mode=644
+  template:
+    src: hosts.j2
+    dest: /etc/hosts
+    mode: 0644
+    owner: root
+    group: root
 
 - name: install base packages
-  pacman: name={{ item }} state=present
+  pacman:
+    name: "{{ item }}"
+    state: present
   with_items: "{{ packages }}"
 
 - include: bootloader.yml
