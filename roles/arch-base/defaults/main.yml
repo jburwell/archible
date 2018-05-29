@@ -1,4 +1,4 @@
-aur:
+base_aur_packages:
   - cower
   - downgrade
   - pacaur
