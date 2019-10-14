@@ -1,0 +1,22 @@
+{
+  "builders": [
+    {
+      "type": "virtualbox-iso",
+      "guest_os_type": "ArchLinux_64",
+      "iso_url": "file://archlinux-2019.10.01-x86_64.iso",
+      "iso_checksum": "bdaa6bb55b8486e9bee686689b3121785030410c92f0e070c9120a252f0d248c",
+      "iso_checksum_type": "sha256",
+      "http_directory": "srv",
+      "boot_wait": "10s",
+      "boot_command": [
+        "<enter><wait10><wait10><wait10><wait10>",
+        "/usr/bin/curl -O http://{{ .HTTPIP }}:{{ .HTTPPort }}/enable-ssh.sh<enter><wait5>",
+        "/usr/bin/bash ./enable-ssh.sh<enter>"
+      ],
+      "ssh_username": "vagrant",
+      "ssh_password": "vagrant",
+      "shutdown_command": "sudo shutdown -h now"
+    }
+  ]
+}
+
